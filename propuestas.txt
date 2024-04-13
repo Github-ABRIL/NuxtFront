@@ -1,1 +1,11 @@
 https://nuxt.com/docs/getting-started/installation
+
+--Propuesta de Arturo--
+
+Chat
+https://codepen.io/clintabrown/pen/kBPpZO
+https://codepen.io/TurkAysenur/pen/ZEbXoRZ
+
+Plataforma
+https://codepen.io/TurkAysenur/pen/ZEpxeYm
+

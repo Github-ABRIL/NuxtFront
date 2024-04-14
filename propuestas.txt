@@ -1,3 +1,11 @@
 https://nuxt.com/docs/getting-started/installation
-PROPUESTAS URIEL
-1-.
+**Propuestas de uriel** 
+--Propuesta de Arturo--
+
+Chat
+https://codepen.io/clintabrown/pen/kBPpZO
+https://codepen.io/TurkAysenur/pen/ZEbXoRZ
+
+Plataforma
+https://codepen.io/TurkAysenur/pen/ZEpxeYm
+

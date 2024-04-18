@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: 'Gothic A1', sans-serif;
+        background-color: #111;
+        color: #ddd;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* Centra en el eje x */
+        align-items: center; /* Centra en el eje y */
+        flex-direction: column;
+    }
+    
+.contenedor {
+    width: 50vw;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.mensaje {
+    margin-bottom: 20px;
+    overflow: auto;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+.mensaje .remitente {
+    font-weight: bold;
+    color: #FFA500; /* Naranja */
+}
+
+.mensaje .contenido {
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+
+.usuario {
+    color: #00FF00; /* Verde */
+}
+
+.otro {
+    color: #00BFFF; /* Azul claro */
+}
+
+.fecha {
+    font-size: 10px;
+    color: #aaa;
+}
+
+.editado {
+    font-size: 10px;
+    color: #aaa;
+}
+
+input[type="text"] {
+    width: 50vw;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #ddd;
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+input[type="text"]:focus {
+    border: 2px solid #FFA500; /* Cambia el color y el grosor del contorno cuando el elemento está enfocado */
+}
+
+
+button {
+    width: 80px;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFA500; /* Naranja */
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #c7912c;
+}
+
+#botonGuardar{
+    position: fixed;
+    top: 0;
+    margin: 10px;
+    right: 0;
+}
+
+/* Media queries para diseño responsivo */
+@media only screen and (max-width: 600px) {
+    .contenedor {
+        padding: 10px;
+        max-width: 90vw;
+    }
+
+    input[type="text"] {
+        max-width: 90vw;
+    }
+
+    button {
+        width: 60px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+</style>
+</head>
+<body>
+<div class="contenedor" id="contenedorChat">
+</div>
+<input type="text" id="campoMensaje" placeholder="Escribe tu mensaje...">
+<button id="botonEnviar">Enviar</button>
+<button id="botonGuardar">Guardar</button>
+
+<script>
+var nombreUsuario = "";
+var mensajeEditandoIndex = -1;
+
+function solicitarNombreUsuario() {
+    nombreUsuario = prompt("Por favor ingresa tu nombre:");
+    if (!nombreUsuario) {
+        solicitarNombreUsuario();
+    }
+}
+
+solicitarNombreUsuario();
+
+var conversacion = [];
+
+function cargarConversacion() {
+    var contenedorChat = document.getElementById("contenedorChat");
+    contenedorChat.innerHTML = "";
+    conversacion.forEach(function(mensaje, index) {
+        var div = document.createElement("div");
+        div.classList.add("mensaje");
+        div.dataset.index = index; // Guardamos el índice del mensaje en un atributo de datos
+        div.addEventListener("dblclick", function(event) {
+            iniciarEdicionMensaje(event.target.dataset.index);
+        });
+        var remitenteSpan = document.createElement("span");
+        remitenteSpan.classList.add("remitente");
+        remitenteSpan.textContent = mensaje.remitente + ": ";
+        var fechaSpan = document.createElement("span");
+        fechaSpan.classList.add("fecha");
+        fechaSpan.textContent = "(" + mensaje.timestamp + ")";
+        var contenidoDiv = document.createElement("div");
+        contenidoDiv.classList.add("contenido");
+        contenidoDiv.textContent = mensaje.contenido;
+        if (mensaje.editado) {
+            var editadoSpan = document.createElement("span");
+            editadoSpan.classList.add("editado");
+            editadoSpan.textContent = " (Editado)";
+            contenidoDiv.appendChild(editadoSpan);
+        }
+        div.appendChild(remitenteSpan);
+        div.appendChild(fechaSpan);
+        div.appendChild(document.createElement("br"));
+        div.appendChild(contenidoDiv);
+        contenedorChat.appendChild(div);
+    });
+}
+
+function enviarMensaje() {
+    var campoMensaje = document.getElementById("campoMensaje");
+    var contenidoMensaje = campoMensaje.value.trim();
+    if (contenidoMensaje !== "") {
+        if (mensajeEditandoIndex !== -1) {
+            // Si estamos editando un mensaje existente
+            conversacion[mensajeEditandoIndex].contenido = contenidoMensaje;
+            conversacion[mensajeEditandoIndex].editado = true;
+            conversacion[mensajeEditandoIndex].timestamp = obtenerFechaHora();
+            mensajeEditandoIndex = -1; // Reiniciamos el índice de edición
+        } else {
+            // Si estamos enviando un nuevo mensaje
+            var mensaje = { 
+                remitente: nombreUsuario, 
+                contenido: contenidoMensaje, 
+                editado: false,
+                timestamp: obtenerFechaHora()
+            };
+            conversacion.push(mensaje);
+        }
+        guardarConversacion();
+        cargarConversacion();
+        campoMensaje.value = "";
+    }
+}
+
+function guardarConversacion() {
+    var conversacionJSON = JSON.stringify(conversacion);
+    localStorage.setItem("conversacion", conversacionJSON);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var conversacionGuardadaJSON = localStorage.getItem("conversacion");
+    if (conversacionGuardadaJSON !== null) {
+        conversacion = JSON.parse(conversacionGuardadaJSON);
+        cargarConversacion();
+    }
+});
+
+document.getElementById("botonEnviar").addEventListener("click", function() {
+    enviarMensaje();
+});
+
+document.getElementById("campoMensaje").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        enviarMensaje();
+    }
+});
+
+document.getElementById("botonGuardar").addEventListener("click", function() {
+    guardarConversacionTxt();
+});
+
+function guardarConversacionTxt() {
+    var conversacionTxt = "Conversación guardada por: " + nombreUsuario + "\n\n";
+    conversacion.forEach(function(mensaje) {
+        conversacionTxt += mensaje.remitente + " (" + mensaje.timestamp + "): " + mensaje.contenido;
+        if (mensaje.editado) {
+            conversacionTxt += " (Editado)";
+        }
+        conversacionTxt += "\n";
+    });
+
+    var blob = new Blob([conversacionTxt], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "conversacion.txt");
+}
+
+function iniciarEdicionMensaje(index) {
+    mensajeEditandoIndex = index;
+    var mensajeEditando = conversacion[index];
+    if (mensajeEditando) {
+        document.getElementById("campoMensaje").value = mensajeEditando.contenido;
+    } else {
+        console.error("El mensaje seleccionado no existe en la conversación.");
+    }
+}
+
+function obtenerFechaHora() {
+    var fechaHora = new Date();
+    var options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true // Esto activa el formato de 12 horas
+    };
+    var hora = fechaHora.toLocaleTimeString(undefined, options);
+    var fecha = fechaHora.toLocaleDateString();
+    return fecha + " " + hora;
+}
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+</html>

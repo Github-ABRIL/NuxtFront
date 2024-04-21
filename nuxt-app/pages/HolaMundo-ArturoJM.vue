@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      mensaje: 'Hola Mundo',
+      mensaje: 'Hola Cinthia :/ entrega tarea',
       creditos: 'Original: https://codepen.io/giana/pen/qmKNeE ',
       versionToggle: false
     };

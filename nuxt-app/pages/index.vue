@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border border-white" >
     <h1>{{ mensaje }}</h1>
   </div>
 </template>
@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      mensaje: '¡Hola, mundo!',
+      mensaje: '¡Hola, mundobdfbfdbfbfdb!',
     };
   },
 };

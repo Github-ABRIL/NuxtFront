@@ -1,0 +1,220 @@
+<plantilla>
+  <cuerpo>
+    <Div
+      class="max-w-screen-lg mx-auto w-full flex flex-col h-screen max-h-screen overflow-hidden bg-white text-gray-800 shadow-lg rounded-lg"
+    >
+      <Div
+        ref="mensajesContenedor"
+        class="messages flex-1 overflow-y-scroll border-box"
+      >
+        <Div
+          v-for="(mensaje, índice) en mensajes"
+ :clave="índice"
+ :clase="{
+  'message-row': true,
+  'flex flex-row-reverse': mensaje. de === 'Ana',
+  'flex flex-row': mensaje. de !== 'Ana',
+          }"
+        >
+          <Div
+ :clase="{
+ Mensaje: verdadero,
+  'M-2 P-4 BG-green-100 Rounded-LG Max-W-MD Inline-Block Relative Shadow-md':
+  mensaje. de === 'Ana',
+  'M-2 P-4 BG-gray-100 Text-gray-700 Rounded-LG Max-W-MD Inline-Block Relative Shadow-md':
+  mensaje. de !== 'Ana',
+            }"
+          >
+            <p class="mensaje-contenido">{{ mensaje.Contenido }}</p>
+            <div v-if="mensaje.nombre" class="nombre-mensaje text-sm text-gray-600">
+              <span v-if="mensaje.nombre === 'Bot'" class="flex items-center">
+                <i class="fa-solid fa-robot mr-2"></i>
+                {{ mensaje. nombre }}
+              </span>
+              <span v-else-if="mensaje.nombre === 'Ana'" class="flex items-center">
+                <i class="fa-solid fa-user mr-2"></i>
+                {{ mensaje. nombre }}
+              </span>
+              <span v-else>{{ mensaje.nombre }}</span>
+            </Div>
+          </Div>
+        </Div>
+      </Div>
+
+      <div class="entrada-de-mensaje bg-gray-100 p-4 flex flex-row">
+        <input
+          ref="inputMessage"
+          class="flex-1 p-2 rounded-l-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600"
+          type="text"
+          placeholder="Escribe tu mensaje aquí"
+          @keydown.enter="sendMessage"
+        />
+        <button
+          @click="sendMessage"
+          class="w-16 bg-green-600 rounded-r-lg text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 font-bold"
+          id="enviar"
+        >
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+        <button
+          class="ml-4 px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 font-bold"
+          id="PDF"
+        >
+          PDF
+          <i class="fa-solid fa-file-lines"></i>
+        </button>
+      </Div>
+    </Div>
+  </cuerpo>
+</plantilla>
+
+<Guión>
+export default {
+  datos() {
+    devolución {
+      messages: [
+        { content: "¡Hola! Soy Ana. ¿Cómo estás?", from: "Ana", name: "Ana" },
+        {
+ contenido: "Hola Ana, soy un bot. Estoy bien, gracias por preguntar. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "Me alegra escuchar eso, ¿qué has estado haciendo últimamente? ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "Últimamente he estado ayudando a resolver preguntas y dando información útil a los usuarios. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "¿Puedo preguntarte sobre un proyecto en el que estoy trabajando? ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "¡Por supuesto, estaré encantado de ayudarte con cualquier pregunta que tengas! ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "Estoy trabajando en un proyecto de diseño de una aplicación móvil para la gestión de tareas. ¿Tienes algún consejo sobre cómo mejorar la experiencia del usuario? ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "¡Qué interesante! La experiencia del usuario es crucial para el éxito de cualquier aplicación. ¿Tienes alguna idea específica sobre qué aspecto mejorar? ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "Estoy buscando formas de hacer la aplicación más intuitiva y fácil de usar. Quiero asegurarme de que los usuarios puedan navegar por ella sin dificultad y que les resulte atractiva visualmente. ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "Una buena práctica es realizar pruebas de usabilidad con usuarios reales para identificar cualquier problema de navegación o diseño. También es importante seguir los principios de diseño de interfaz de usuario (UI) y experiencia de usuario (UX) para garantizar la claridad y la coherencia en todo el diseño de la aplicación. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "Eso suena muy útil. ¿Hay alguna herramienta que recomiendes para realizar pruebas de usabilidad? ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "Existen varias herramientas disponibles, como UserTesting, UsabilityHub y Lookback. Estas plataformas te permiten reclutar participantes y realizar pruebas de usabilidad remotas para obtener comentarios valiosos sobre tu aplicación. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "¡Gracias por las recomendaciones! Definitivamente echaré un vistazo a esas herramientas. ¿Hay algo más que deba tener en cuenta al diseñar la aplicación? ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "Además de la usabilidad, también es importante considerar la accesibilidad para garantizar que la aplicación sea utilizada por la mayor cantidad posible de personas, incluyendo aquellas con discapacidades. Esto implica utilizar colores contrastantes, proporcionar opciones de accesibilidad y hacer que la aplicación sea compatible con lectores de pantalla. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+        {
+ Contenido:
+  "Entiendo, la accesibilidad es crucial para garantizar la inclusión de todos los usuarios. Definitivamente tendré en cuenta eso en el diseño. ¡Gracias por todos los consejos, Bot! ",
+ de: "Ana",
+ nombre: "Ana",
+        },
+        {
+ Contenido:
+  "—De nada, Ana. Si necesitas más ayuda o tienes más preguntas, no dudes en preguntarme. Estoy aquí para ayudarte en lo que necesites. ",
+ de: "Bot",
+ nombre: "Bot",
+        },
+      ],
+    };
+  },
+ Métodos: {
+    sendMessage() {
+  const mensaje = esto. $refs. inputMessage. valor;
+  if (mensaje.trim() !== "") {
+  esto. mensajes. push({ content: mensaje, de: "Ana", nombre: "Ana" });
+  esto. $refs. inputMessage. valor = "";
+  esto. $nextTick(() => {
+  esto. scrollMessagesToBottom();
+        });
+      }
+    },
+    scrollMessagesToBottom() {
+  const contenedor = esto. $refs. messagesContainer;
+  contenedor. scrollTop = contenedor. scrollHeight;
+    },
+  },
+};
+</Guión>
+
+<estilo>
+/************ Para poner iconos ************/
+@import url("https://use.fontawesome.com/releases/v5.0.9/css/all.css");
+@import url("https://use.fontawesome.com/releases/v6.4.2/css/all.css");
+cuerpo {
+  margen: 0;
+  font-family: "Consolas", monoespaciado;
+  Antecedentes: #f4f7f9;
+  espaciado entre letras: 0.7px;
+  interlineado entre palabras: 2.3px;
+}
+::-webkit-scrollbar {
+  ancho: 8px;
+}
+::-webkit-scrollbar-track {
+  Fondo: transparente;
+}
+::-webkit-scrollbar-thumb {
+  Antecedentes: RGBA (116, 175, 129, 0,3);
+}
+.Mensaje {
+  color del borde: transparente;
+}
+.nombre-mensaje {
+  color: #4a5568;
+}
+input[type="text"] {
+  borde: 1px #cbd5e0 sólido;
+}
+#enviar i {
+  transformar: scaleX(-1);
+}
+</estilo>

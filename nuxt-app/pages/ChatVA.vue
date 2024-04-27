@@ -59,10 +59,11 @@
         >
           <i class="fa-solid fa-reply-all"></i>
         </button>
-        <button
-          class="ml-4 px-4 py-2 rounded bg-green-800 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 font-bold"
-          id="PDF"
-        >
+<button
+  @click="saveAsPDF"
+  class="ml-4 px-4 py-2 rounded bg-green-800 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 font-bold"
+  id="PDF"
+>
           PDF
           <i class="fa-solid fa-file-lines"></i>
         </button>
@@ -72,6 +73,8 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf';
+
 export default {
   data() {
     return {
@@ -184,8 +187,16 @@ export default {
       const container = this.$refs.messagesContainer;
       container.scrollTop = container.scrollHeight;
     },
+    saveAsPDF() {
+      const doc = new jsPDF();
+      const messages = this.messages.map(message => `${message.name}: ${message.content}`);
+      const textLines = doc.splitTextToSize(messages, 180); 
+      doc.text(textLines, 10, 10);
+      doc.save('conversacion.pdf');
+    },
   },
 };
+
 </script>
 
 <style>

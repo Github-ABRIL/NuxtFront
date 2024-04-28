@@ -12,17 +12,17 @@
           :key="index"
           :class="{
             'message-row': true,
-            'flex flex-row-reverse': message.from === 'Ana',
-            'flex flex-row': message.from !== 'Ana',
+            'flex flex-row-reverse': message.from === 'Persona',
+            'flex flex-row': message.from !== 'Persona',
           }"
         >
           <div
             :class="{
               message: true,
               'm-2 p-4 bg-green-800 rounded-lg max-w-md inline-block relative shadow-xl':
-                message.from === 'Ana',
+                message.from === 'Persona',
               'm-2 p-4 bg-gray-800 text-gray-200 rounded-lg max-w-md inline-block relative shadow-xl':
-                message.from !== 'Ana',
+                message.from !== 'Persona',
             }"
           >
             <p class="message-content">{{ message.content }}</p>
@@ -32,7 +32,7 @@
                 {{ message.name }}
               </span>
               <span
-                v-else-if="message.name === 'Ana'"
+                v-else-if="message.name === 'Persona'"
                 class="flex items-center"
               >
                 <i class="fa-solid fa-user mr-2"></i>
@@ -73,110 +73,31 @@
 </template>
 
 <script>
+import axios from 'axios';
 import jsPDF from 'jspdf';
 
 export default {
   data() {
     return {
-      messages: [
-        { content: "¡Hola! Soy Ana. ¿Cómo estás?", from: "Ana", name: "Ana" },
-        {
-          content: "Hola Ana, soy un bot. Estoy bien, gracias por preguntar.",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "Me alegra escuchar eso, ¿qué has estado haciendo últimamente?",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "Últimamente he estado ayudando a resolver preguntas y dando información útil a los usuarios.",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "¿Puedo preguntarte sobre un proyecto en el que estoy trabajando?",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "¡Por supuesto, estaré encantado de ayudarte con cualquier pregunta que tengas!",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "Estoy trabajando en un proyecto de diseño de una aplicación móvil para la gestión de tareas. ¿Tienes algún consejo sobre cómo mejorar la experiencia del usuario?",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "¡Qué interesante! La experiencia del usuario es crucial para el éxito de cualquier aplicación. ¿Tienes alguna idea específica sobre qué aspecto mejorar?",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "Estoy buscando formas de hacer la aplicación más intuitiva y fácil de usar. Quiero asegurarme de que los usuarios puedan navegar por ella sin dificultad y que les resulte atractiva visualmente.",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "Una buena práctica es realizar pruebas de usabilidad con usuarios reales para identificar cualquier problema de navegación o diseño. También es importante seguir los principios de diseño de interfaz de usuario (UI) y experiencia de usuario (UX) para garantizar la claridad y la coherencia en todo el diseño de la aplicación.",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "Eso suena muy útil. ¿Hay alguna herramienta que recomiendes para realizar pruebas de usabilidad?",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "Existen varias herramientas disponibles, como UserTesting, UsabilityHub y Lookback. Estas plataformas te permiten reclutar participantes y realizar pruebas de usabilidad remotas para obtener comentarios valiosos sobre tu aplicación.",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "¡Gracias por las recomendaciones! Definitivamente echaré un vistazo a esas herramientas. ¿Hay algo más que deba tener en cuenta al diseñar la aplicación?",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "Además de la usabilidad, también es importante considerar la accesibilidad para garantizar que la aplicación sea utilizada por la mayor cantidad posible de personas, incluyendo aquellas con discapacidades. Esto implica utilizar colores contrastantes, proporcionar opciones de accesibilidad y hacer que la aplicación sea compatible con lectores de pantalla.",
-          from: "Bot",
-          name: "Bot",
-        },
-        {
-          content:
-            "Entiendo, la accesibilidad es crucial para garantizar la inclusión de todos los usuarios. Definitivamente tendré en cuenta eso en el diseño. ¡Gracias por todos los consejos, Bot!",
-          from: "Ana",
-          name: "Ana",
-        },
-        {
-          content:
-            "De nada, Ana. Si necesitas más ayuda o tienes más preguntas, no dudes en preguntarme. Estoy aquí para ayudarte en lo que necesites.",
-          from: "Bot",
-          name: "Bot",
-        },
-      ],
+      messages: []
     };
   },
+  created() {
+    this.loadMessages();
+  },
   methods: {
+    async loadMessages() {
+      try {
+        const response = await axios.get('./static/messages.json');
+        this.messages = response.data;
+      } catch (error) {
+        console.error('Error al cargar los mensajes:', error);
+      }
+    },
     sendMessage() {
       const message = this.$refs.inputMessage.value;
       if (message.trim() !== "") {
-        this.messages.push({ content: message, from: "Ana", name: "Ana" });
+        this.messages.push({ content: message, from: "Persona", name: "Persona" });
         this.$refs.inputMessage.value = "";
         this.$nextTick(() => {
           this.scrollMessagesToBottom();
@@ -194,10 +115,10 @@ export default {
       doc.text(textLines, 10, 10);
       doc.save('conversacion.pdf');
     },
-  },
+  }
 };
-
 </script>
+
 
 <style>
 /************ Para poner iconos ***********/

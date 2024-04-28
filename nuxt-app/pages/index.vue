@@ -1,15 +1,21 @@
 <template>
-  <div class="border border-white" >
-    <h1>{{ mensaje }}</h1>
+  <div>
+    <p v-for="message in messages" :key="message.id">
+      {{ message.sender }}: {{ message.message }}
+    </p>
   </div>
-</template>
-
-<script>
+</template> <script>
+import messages from "@/static/messages.json";
 export default {
   data() {
-    return {
-      mensaje: '¡Hola, mundobdfbfdbfbfdb!',
-    };
+    return { messages: messages.conversation };
   },
 };
-</script>
+</script> 
+
+<style scoped>
+*{
+color: white;
+
+}
+</style>

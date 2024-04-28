@@ -15,6 +15,7 @@
             'flex flex-row-reverse': message.sender === 'Persona',
             'flex flex-row': message.sender !== 'Persona',
           }"
+          :style="{ animation: 'fadeIn 0.5s ease-in-out' }"
         >
           <div
             :class="{
@@ -24,21 +25,29 @@
               'm-2 p-4 bg-gray-800 text-gray-200 rounded-lg max-w-md inline-block relative shadow-xl':
                 message.sender !== 'Persona',
             }"
+            :style="{ animation: 'scaleIn 0.5s ease-in-out' }"
           >
             <p class="message-content">{{ message.message }}</p>
+
             <div class="message-name text-sm text-white">
               <span v-if="message.sender === 'Bot'" class="flex items-center">
-                <i class="fa-solid fa-robot mr-2"></i>
-                {{ message.sender }}
+                <i class="fa-solid fa-robot mr-2 text-gray-300"></i>
+                <span class="font-bold text-gray-300">{{
+                  message.sender
+                }}</span>
               </span>
               <span
                 v-else-if="message.sender === 'Persona'"
                 class="flex items-center"
               >
-                <i class="fa-solid fa-user mr-2"></i>
+                <i class="fa-solid fa-user mr-2 text-gray-300"></i>
+                <span class="font-bold text-gray-300">{{
+                  message.sender
+                }}</span>
+              </span>
+              <span v-else>
                 {{ message.sender }}
               </span>
-              <span v-else>{{ message.sender }}</span>
             </div>
           </div>
         </div>
@@ -141,7 +150,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -153,7 +162,8 @@ body {
 }
 
 .message {
-  border-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 7px 28px 0 rgba(0, 0, 0, 0.35);
 }
 
 .message-name {
@@ -167,4 +177,25 @@ input[type="text"] {
 #enviar i {
   transform: scaleX(-1);
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
+

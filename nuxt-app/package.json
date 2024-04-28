@@ -1,28 +1,218 @@
 {
 
-  
+  
+
+
+
   "name": "nuxt-app",
+
+  
+
+
+
   "private": true,
+
+  
+
+
+
   "type": "module",
+
+  
+
+
+
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+
+  
+
+
+
+    
+
+
+
+  "build": "nuxt build",
+
+  
+
+
+
+    
+
+
+
+  "dev": "nuxt dev",
+
+  
+
+
+
+    
+
+
+
+  "generate": "nuxt generate",
+
+  
+
+
+
+    
+
+
+
+  "preview": "nuxt preview",
+
+  
+
+
+
+    
+
+
+
+  "postinstall": "nuxt prepare"
+
+  
+
+
+
   },
+
+  
+
+
+
   "dependencies": {
-    "bun": "^1.1.4",
-    "jspdf": "^2.5.1",
-    "nuxt": "^3.8.1",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
-  }, 
+
+  
+
+
+
+    
+
+
+
+  "@nuxtjs/axios": "^5.13.6",
+
+  
+
+
+
+    
+
+
+
+  "@types/axios": "^0.14.0",
+
+  
+
+
+
+    
+
+
+
+  "axios": "^1.6.8",
+
+  
+
+
+
+    
+
+
+
+  "bun": "^1.1.4",
+
+  
+
+
+
+    
+
+
+
+  "jspdf": "^2.5.1",
+
+  
+
+
+
+    
+
+
+
+  "nuxt": "^3.8.1",
+
+  
+
+
+
+    
+
+
+
+  "vue": "^3.4.21",
+
+  
+
+
+
+    
+
+
+
+  "vue-router": "^4.3.0"
+
+  
+
+
+
+  },
+
+  
+
+
+
   "devDependencies": {
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3"
+
+  
+
+
+
+    
+
+
+
+  "autoprefixer": "^10.4.19",
+
+  
+
+
+
+    
+
+
+
+  "postcss": "^8.4.38",
+
+  
+
+
+
+    
+
+
+
+  "tailwindcss": "^3.4.3"
+
+  
+
+
+
   }
 
-
 }
+
